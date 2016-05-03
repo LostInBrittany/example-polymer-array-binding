@@ -1,0 +1,27 @@
+{
+  "name": "example-polymer-array-binding",
+  "authors": [
+    "Horacio Gonzalez <horacio.gonzalez@gmail.com>"
+  ],
+  "description": "Data binding with arrays",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer"
+  ],
+  "main": "",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "homepage": "",
+  "ignore": [],
+  "dependencies": {
+    "polymer": "~1.4.0",
+    "bootstrap": "~3.3.6"
+  },
+  "devDependencies": {
+  }
+}

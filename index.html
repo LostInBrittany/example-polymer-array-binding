@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<title>Polymer example - Add data to table</title>
+
+
+<link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+
+<style>
+  body {
+    background-color: #eeeeee;
+  }
+</style>
+
+<script src="../webcomponentsjs/webcomponents.js"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.css"/>
+<script src="../jquery/dist/jquery.js"></script>
+<script src="../bootstrap/dist/js/bootstrap.js"></script>
+
+<!-- Polymer -->
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../example-polymer-array-binding/user-list.html">
+<link rel="import" href="../example-polymer-array-binding/add-user.html">
+
+
+</head>
+
+
+<body>
+ 
+  <template is="dom-bind"> 
+
+    <div class="container">
+      <user-list users="{{users}}"></user-list>
+      <add-user users="{{users}}"></add-user>
+    </div>
+    
+  </template>
+  
+</body>
+</html>

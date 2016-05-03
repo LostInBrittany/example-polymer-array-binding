@@ -1,0 +1,48 @@
+<dom-module is="add-user">
+  <template>
+    <style>        
+    </style>
+    <div class="container">
+      <h2>Add a user</h2>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="inputFirstName">First name</label>
+          <input type="text" class="form-control" id="inputFirstName" value="{{firstName::input}}" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label for="inputLastName">Last name</label>
+          <input type="text" class="form-control" id="inputLastName" value="{{lastName::input}}" placeholder="Doe">
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Email</label>
+          <input type="email" class="form-control" id="inputEmail" value="{{email::input}}" placeholder="jane.doe@example.org">
+        </div>
+        <div class="btn btn-default" on-click="validateUser">Add user</div>
+      </form>
+    </div>
+  </template>
+  <script>
+    Polymer({        
+      is: "add-user",
+      properties: {
+        users: {
+          type: Array,
+          notify: true,
+          value: function() { return []; }
+        }
+      }, 
+      ready: function() {
+        this.users = [];
+      },
+      validateUser: function() {
+        var user = { 
+          firstName: this.firstName, 
+          lastName: this.lastName, 
+          email: this.email
+        };
+        console.debug("New user", user);
+        this.push('users', user)
+      }
+    })
+  </script>
+</dom-module>
