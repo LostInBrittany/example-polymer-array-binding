@@ -3,7 +3,7 @@
   "authors": [
     "Horacio Gonzalez <horacio.gonzalez@gmail.com>"
   ],
-  "description": "Data binding with arrays",
+  "description": "Example of array data binding with Polymer",
   "keywords": [
     "web-component",
     "web-components",
@@ -19,9 +19,8 @@
   "homepage": "",
   "ignore": [],
   "dependencies": {
-    "polymer": "~1.4.0",
-    "bootstrap": "~3.3.6"
+    "polymer": "Polymer/polymer#~2.2.0",
+    "granite-bootstrap": "LostInBrittany/granite-bootstrap#^4.0.2-beta.2.1"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

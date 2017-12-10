@@ -1,48 +1,47 @@
-<dom-module is="add-user">
+<link rel="import" href="./edit-user.html">
+
+<dom-module id="add-user">
   <template>
-    <style>        
+    <style include="granite-bootstrap-min">
+      :host {
+        display: block;
+      }   
+      .form-group {
+        margin-right: 36px;
+      }
     </style>
     <div class="container">
       <h2>Add a user</h2>
-      <form class="form-inline">
-        <div class="form-group">
-          <label for="inputFirstName">First name</label>
-          <input type="text" class="form-control" id="inputFirstName" value="{{firstName::input}}" placeholder="Jane">
-        </div>
-        <div class="form-group">
-          <label for="inputLastName">Last name</label>
-          <input type="text" class="form-control" id="inputLastName" value="{{lastName::input}}" placeholder="Doe">
-        </div>
-        <div class="form-group">
-          <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" value="{{email::input}}" placeholder="jane.doe@example.org">
-        </div>
-        <div class="btn btn-default" on-click="validateUser">Add user</div>
-      </form>
+      <edit-user 
+          message='Add'
+          on-user-edit="validateUser"></edit-user>
     </div>
   </template>
   <script>
-    Polymer({        
-      is: "add-user",
-      properties: {
-        users: {
-          type: Array,
-          notify: true,
-          value: function() { return []; }
-        }
-      }, 
-      ready: function() {
-        this.users = [];
-      },
-      validateUser: function() {
-        var user = { 
-          firstName: this.firstName, 
-          lastName: this.lastName, 
-          email: this.email
+    class AddUser extends Polymer.Element {
+      static get is() { return 'add-user'; }
+
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            notify: true,
+          }
         };
-        console.debug("New user", user);
+      }
+
+      validateUser(evt) {
+        console.debug('[àdd-user] validateUser', evt.detail);
+        let user = { 
+          firstName: evt.detail.firstName, 
+          lastName: evt.detail.lastName, 
+          email: evt.detail.email
+        };
+        console.debug('[àdd-user] validateUser - New user', user, this.users);
         this.push('users', user)
       }
-    })
+    }
+
+    window.customElements.define(AddUser.is, AddUser);
   </script>
 </dom-module>

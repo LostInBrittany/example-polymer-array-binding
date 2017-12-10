@@ -1,0 +1,61 @@
+<dom-module id="edit-user">
+  <template>
+    <style include="granite-bootstrap-min">
+      :host {
+        display: block;
+      }   
+      .form-group {
+        margin-right: 36px;
+      }
+    </style>
+    <form class="form-inline">
+      <label for="inputFirstName" class="sr-only">First name</label>
+      <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-2" id="inputFirstName" value="{{firstName::input}}" placeholder="Jane">
+      <label for="inputLastName" class="sr-only">Last name</label>
+      <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-2" id="inputLastName" value="{{lastName::input}}" placeholder="Doe">
+      <label for="inputEmail" class="sr-only">Email</label>
+      <input type="email" class="form-control mb-2 mr-sm-2 mb-sm-2" id="inputEmail" value="{{email::input}}" placeholder="jane.doe@example.org">
+      <div class="btn btn-primary" on-click="doAction">[[message]] user</div>
+    </form>
+  </template>
+  <script>
+    class EditUser extends Polymer.Element {
+      static get is() { return 'edit-user'; }
+
+      static get properties() {
+        return {
+          firstName: {
+            type: String,
+            value: '',
+          },
+          lastName: {
+            type: String,
+            value: '',
+          },
+          email: {
+            type: String,
+            value: '',
+          },
+          message: {
+            type: String,
+            value: '',
+          },
+        };
+      }
+
+      read() {
+        this.users = [];
+      }
+
+      doAction() {
+        this.dispatchEvent(new CustomEvent('user-edit', {detail: {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+        }}));
+      }
+    }
+
+    window.customElements.define(EditUser.is, EditUser);
+  </script>
+</dom-module>

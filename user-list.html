@@ -1,15 +1,22 @@
-<dom-module is="user-list">
+<dom-module id="user-list">
   <template>
-    <style>        
+    <style include="granite-bootstrap-min">
+      :host {
+        display: block;
+      }
+      .table th, .table td {
+        vertical-align: middle;
+      }
     </style>
-    <div class="container">
+    <div class="container">                
       <h2>User list</h2>
       <table class="table table-striped">
         <tr>
           <th>#</td>
           <th>First name</th>
           <th>Last name</th>
-          <th>Email</th>            
+          <th>Email</th>  
+          <th>Edit</th>          
         </tr> 
         <template is="dom-repeat" items="{{users}}" as="user">
           <tr>
@@ -17,28 +24,107 @@
             <td>{{user.firstName}}</td> 
             <td>{{user.lastName}}</td> 
             <td>{{user.email}}</td>
+            <td><div class="btn btn-primary" on-click="_doEdit">Edit</div></td>
           </tr>
         </template> 
       </table>
     </div>
+    <template is="dom-if" if="[[_editing]]">
+      <div class="container">
+        <h2>Edit user</h2>
+        <edit-user 
+            id="editUser"
+            first-name="[[_editingUser.firstName]]"
+            last-name="[[_editingUser.lastName]]"
+            email="[[_editingUser.email]]"
+            message="Edit"
+            on-user-edit="validateUser"></edit-user>
+      </div>
+    </template>
+    
   </template>
   <script>
-    Polymer({        
-      is: "user-list",
-      properties: {
-        users: {
-          type: Array,
-          // When initializing a property to an object or array value, use a function to ensure that each element
-          // gets its own copy of the value, rather than having an object or array shared across all instances of the element
-          value: function() { return []; }
+    class UserList extends Polymer.Element {
+      static get is() { return 'user-list'; }
+
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            notify: true,
+            // When initializing a property to an object or array value, use a function to ensure that each element
+            // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+            value: function() { return []; }
+          },
+          
+          boxarray: {
+            type: Array,
+            // When initializing a property to an object or array value, use a function to ensure that each element
+            // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+            value: function() { return []; }
+          },
+
+          _editing: {
+            type: Boolean,
+            value:false
+          },
+
+          _editingUser: {
+            type: Object,
+            value: () => { return {}; }
+          },
+          _editingIndex: {
+            type: Number,
+            value: -1
+          },
+          
+        };
+      }
+
+      static get observers() {
+        return [
+          'usersChanged(users.splices)'
+        ];
+      }
+
+      ready() {
+        super.ready();
+        console.debug('[example-main] ready');
+        //this.boxarray = [];
+        for (var i=0; i<10; i++) {    
+          this.boxarray.push(`pushed element #${i}`);
         }
-      }, 
-      observers: [
-        "usersChanged(users.splices)"
-      ],
-      usersChanged: function() {
-        console.debug("User list", this.users);
-      }      
-    })
+
+        this.push('users', {
+          firstName: "Peter", lastName: "Parker", email: "peter.parker@example.org"
+        });
+
+        this.push('users', {
+          firstName: "Bruce", lastName: "Wayne", email: "bruce.wayne@example.org"
+        });
+
+        console.debug('[example-main] ready', this.boxarray);
+      }
+
+      usersChanged() {
+        console.debug('User list', this.users);
+      }     
+
+      _doEdit(evt) {
+        console.debug('[user-list] _doEdit', evt.model);
+        this._editingUser = evt.model.user;
+        this._editingIndex = evt.model.index;
+        this._editing = true;
+      } 
+      validateUser(evt) {
+        this.splice('users', this._editingIndex, 1, evt.detail);
+        console.debug('[user-list] validateUser', this.users)
+        this._editing = false;
+        this._editingIndex = -1;
+      }
+    }
+
+    window.customElements.define(UserList.is, UserList);
+
   </script>
 </dom-module>
